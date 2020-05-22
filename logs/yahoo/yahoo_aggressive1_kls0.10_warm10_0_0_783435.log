@@ -1,0 +1,6 @@
+using cuda
+Namespace(aggressive=1, batch_size=32, cuda=True, dataset='yahoo', dec_dropout_in=0.5, dec_dropout_out=0.5, dec_nh=1024, dec_type='lstm', decode_from='', decode_input='', decoding_strategy='greedy', enc_nh=1024, enc_type='lstm', epochs=100, eval=False, iw_nsamples=500, jobid=0, kl_start=0.1, label=False, load_path='', log_path='logs/yahoo/yahoo_aggressive1_kls0.10_warm10_0_0_783435.log', momentum=0, ni=512, nsamples=1, nz=32, save_path='models/yahoo/yahoo_aggressive1_kls0.10_warm10_0_0_783435.pt', seed=783435, taskid=0, test_data='datasets/yahoo_data/yahoo.test.txt', test_nepoch=5, train_data='datasets/yahoo_data/yahoo.train.txt', val_data='datasets/yahoo_data/yahoo.valid.txt', warm_up=10)
+Train data: 100000 samples
+finish reading datasets, vocab size is 20001
+dropped sentences: 0
+epoch: 0, iter: 0, avg_loss: 861.6169, kl: 0.0007, mi: 0.0878, recon: 861.6162,au 0, time elapsed 16.26s
