@@ -27,7 +27,7 @@ def init_config():
     # optimization parameters
     parser.add_argument('--optim', type=str, default='sgd', help='')
     parser.add_argument('--nsamples', type=int, default=1, help='number of samples for training')
-    parser.add_argument('--iw_nsamples', type=int, default=500,
+    parser.add_argument('--iw_nsamples', type=int, default=200,
                          help='number of samples to compute importance weighted estimate')
 
     # plotting parameters
@@ -70,11 +70,12 @@ def init_config():
     args = parser.parse_args()
     args.cuda = torch.cuda.is_available()
 
-    args.dataset = "synthetic"
+    args.dataset = "ptb"
+    args.dataset_save = "ptb_save_2"
     if args.plot_mode == "single":
         args.num_plot = 50
 
-    save_dir = "models/%s" % args.dataset
+    save_dir = "models/%s" % args.dataset_save
     plot_dir = "plot_data/%s" % args.plot_mode
 
     if not os.path.exists(save_dir):
@@ -86,7 +87,7 @@ def init_config():
     args.plot_dir = plot_dir
 
     id_ = "%s_aggressive%d_kls%.2f_warm%d_%d_%d_%d" % \
-            (args.dataset, args.aggressive, args.kl_start,
+            (args.dataset_save, args.aggressive, args.kl_start,
              args.warm_up, args.jobid, args.taskid, args.seed)
 
     save_path = os.path.join(save_dir, id_ + '.pt')
@@ -105,7 +106,8 @@ def init_config():
     torch.manual_seed(args.seed)
     if args.cuda:
         torch.cuda.manual_seed(args.seed)
-
+#     print(args)
+#     sys.exit()
     return args
 
 def test(model, test_data_batch, mode, args):
