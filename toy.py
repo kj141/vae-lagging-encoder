@@ -27,7 +27,7 @@ def init_config():
     # optimization parameters
     parser.add_argument('--optim', type=str, default='sgd', help='')
     parser.add_argument('--nsamples', type=int, default=1, help='number of samples for training')
-    parser.add_argument('--iw_nsamples', type=int, default=200,
+    parser.add_argument('--iw_nsamples', type=int, default=5,
                          help='number of samples to compute importance weighted estimate')
 
     # plotting parameters
@@ -42,10 +42,10 @@ def init_config():
     parser.add_argument('--dz', type=float, default=0.1,
         help="granularity to approximate mean of model posterior p(z|x)")
 
-    parser.add_argument('--num_plot', type=int, default=500,
+    parser.add_argument('--num_plot', type=int, default=4,
         help='number of sampled points to be ploted')
 
-    parser.add_argument('--plot_niter', type=int, default=200,
+    parser.add_argument('--plot_niter', type=int, default=50,
         help="plot every plot_niter iterations")
 
 
@@ -71,12 +71,12 @@ def init_config():
     args.cuda = torch.cuda.is_available()
 
     args.dataset = "ptb"
-    args.dataset_save = "ptb_save_2"
+    args.dataset_save = "ptb_plots"
     if args.plot_mode == "single":
         args.num_plot = 50
 
-    save_dir = "models/%s" % args.dataset_save
-    plot_dir = "plot_data/%s" % args.plot_mode
+    save_dir = "models_ptb/%s" % args.dataset_save
+    plot_dir = "plot_data_ptb/%s" % args.plot_mode
 
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
@@ -108,6 +108,7 @@ def init_config():
         torch.cuda.manual_seed(args.seed)
 #     print(args)
 #     sys.exit()
+    args.batch_size = 4
     return args
 
 def test(model, test_data_batch, mode, args):
@@ -191,6 +192,8 @@ def plot_multiple(model, plot_data, grid_z,
                   iter_, args):
 
     plot_data, sents_len = plot_data
+    #print(args.num_plot)
+    #print(args.batch_size)
     plot_data_list = torch.chunk(plot_data, round(args.num_plot / args.batch_size))
 
     infer_posterior_mean = []
